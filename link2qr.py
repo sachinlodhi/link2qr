@@ -7,7 +7,7 @@ from tqdm import tqdm
 # distribution of the data is even i.e. 50% are benign and 50% are malicious
 benign = 'images/benign/'
 malicious = 'images/malicious/'
-ctrM, ctrB = -1, -1
+ctrM, ctrB = 0,0
 
 # rading using CSV module.... This would be changed to reading by pandas
 file = open('balanced_urls.csv', mode='r')
@@ -34,10 +34,12 @@ part4 = lines[len(lines)//4 * 3:len(lines)]
 def generateQR(recs):
     global ctrB, ctrM
     ctr = 1
-    for lines in tqdm(iterable=recs, desc='Progress', total=len(recs[1:5000])):
+    for lines in tqdm(iterable=recs, desc='Progress', total=len(recs)):
         url = lines[0]
         qr = pyqrcode.create(url)
+        print(lines[2])
         if lines[2] == '0':
+            print('in benign')
             qr.png(benign+ str(ctrB) + ".png", scale=8)
             ctrB+=1
         else:
@@ -45,12 +47,15 @@ def generateQR(recs):
             ctrM+=1
         print(ctr)
         ctr+=1
+        break
 
 
 
 # for generating the specific numbers of the sample QR
-generateQR(part1)
-generateQR(part4)
+print(part1[5000:5100])
+generateQR(part1[5000:5100])
+# generateQR(part4[5000:5100])
+
 
 
 
