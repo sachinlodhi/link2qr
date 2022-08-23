@@ -31,22 +31,27 @@ part4 = lines[len(lines)//4 * 3:len(lines)]
 
 
 
+def generateQR(recs):
+    global ctrB, ctrM
+    ctr = 1
+    for lines in tqdm(iterable=recs, desc='Progress', total=len(recs[1:5000])):
+        url = lines[0]
+        qr = pyqrcode.create(url)
+        if lines[2] == '0':
+            qr.png(benign+ str(ctrB) + ".png", scale=8)
+            ctrB+=1
+        else:
+            qr.png(malicious + str(ctrM) + ".png", scale=8)
+            ctrM+=1
+        print(ctr)
+        ctr+=1
 
-# for lines in tqdm(iterable=csvFile, desc='Progress', total=632508):
-#     if ctrB ==-1 and ctrM == -1:
-#         ctrM, ctrB = 0, 0
-#         continue
-#     url = lines[0]
-#     qr = pyqrcode.create(url)
-#     if lines[2] == '0':
-#         qr.png(benign+ str(ctrB) + ".png", scale=8)
-#         ctrB+=1
-#     else:
-#         qr.png(malicious + str(ctrM) + ".png", scale=8)
-#         ctrM+=1
-#
-#
-#
+
+
+# for generating the specific numbers of the sample QR
+generateQR(part1)
+generateQR(part4)
+
 
 
 
